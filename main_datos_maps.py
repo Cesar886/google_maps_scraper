@@ -15,7 +15,7 @@ from pathlib import Path
 from maps_data_scraper import BlockDetected, GoogleMapsDataScraper
 
 BASE_DIR = Path(__file__).resolve().parent
-DEFAULT_OUTPUT = BASE_DIR / "sendEmail.txt"
+DEFAULT_OUTPUT = BASE_DIR.parent / "sendEmail.txt"
 DEFAULT_PROGRESS = BASE_DIR / "progress.json"
 DEFAULT_LOG = BASE_DIR / "scraper.log"
 DEFAULT_MAX_RESULTS = 15
