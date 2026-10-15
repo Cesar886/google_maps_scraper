@@ -1,4 +1,18 @@
-.vscode/*
-__pycache__/*
-imagenes-icono.ico
+.vscode/
+.venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# Archivos locales y datos privados: nunca deben publicarse.
+.smtp_password
+sendEmail.txt
+sent_emails.jsonl
+*.log
+
+# Entradas y salidas locales.
 test.txt
+imagenes-icono.ico
+progress.json
+progress.json.tmp
+scraper.log

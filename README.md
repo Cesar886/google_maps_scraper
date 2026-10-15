@@ -1,4 +1,8 @@
-# Google Maps / Google My Business Scraper 🌎📊
+# Google Maps Scraper y prospección por correo 🌎📊
+
+Repositorio unificado para buscar negocios en Google Maps, localizar correos públicos en sus sitios web, clasificar prospectos por nicho y preparar campañas de correo mediante Brevo SMTP.
+
+> Usa solamente datos públicos con una finalidad comercial legítima, respeta las solicitudes de baja y las leyes aplicables en el lugar donde operes.
 
 This is script is a scraping script developed with Python and its automation library Selenium. **Consists of reading a list of keywords, searching them in the Google Maps search, and getting its data and cover image**.
 
@@ -59,7 +63,7 @@ python3 -m venv env
 source env/bin/activate
 ```
 
-Then install the necessary requirements, which are are specified in the `requierements.txt` file.
+Then install the necessary requirements, which are are specified in the `requirements.txt` file.
 
 ```bash
 pip install -r requirements.txt
@@ -83,3 +87,49 @@ For any doubts about how to use the program, you can read the article of our web
 - Website: [JuarisTech](https://juaristech.com/)
 - Email: admin@juaristech.com
 
+
+
+## Bulk searches on Linux
+
+The Python version supports category and location queries such as `cafeterias en Monterrey`. It visits each result and searches the public business website for a contact email.
+
+Run it with:
+
+```bash
+source .venv/bin/activate
+python main_datos_maps.py
+```
+
+The script asks for the language, the TXT file containing one search per line, and the maximum number of results per search. It does not create Excel files or download images. New contacts are appended to `sendEmail.txt` in the format used by `send_email.py`:
+
+```text
+email|niche|business|contact name
+```
+
+Only businesses with a public email are added. Existing email addresses are preserved and not duplicated. Google Maps and business websites may omit contact details, and automated browsing may occasionally be rate-limited.
+
+
+## Flujo completo desde una sola carpeta
+
+1. Crea y activa el entorno virtual.
+2. Instala las dependencias con `pip install -r requirements.txt`.
+3. Crea un TXT con una búsqueda por línea, por ejemplo `dentistas en Monterrey`.
+4. Ejecuta `python main_datos_maps.py --search-file busquedas.txt` para generar o actualizar `sendEmail.txt`.
+5. Revisa manualmente la lista antes de iniciar cualquier campaña.
+6. Define la variable de entorno `SMTP_PASSWORD` y ejecuta primero una prueba a tu propio correo.
+
+Para ver los nichos disponibles sin enviar mensajes:
+
+```bash
+python send_email.py --list-niches
+```
+
+Para enviar una prueba individual:
+
+```bash
+SMTP_PASSWORD=tu-clave-smtp python send_email.py --to tu-correo@ejemplo.com --niche general --business "Negocio de prueba"
+```
+
+El envío a toda la lista se ejecuta con `python send_email.py --all`. Antes de hacerlo, revisa la lista y los límites de tu proveedor. Los archivos `sendEmail.txt`, `sent_emails.jsonl` y `.smtp_password` están excluidos por `.gitignore`; contienen datos privados y nunca deben subirse a GitHub.
+
+La visión, el estado y los siguientes pasos comerciales están documentados en [`CONTEXTO_PROYECTO_VENTA_PAGINAS.md`](CONTEXTO_PROYECTO_VENTA_PAGINAS.md).

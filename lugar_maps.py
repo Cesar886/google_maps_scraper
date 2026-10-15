@@ -9,6 +9,7 @@ class LugarMaps:
         self.direccion = ''
         self.telefono = ''
         self.web = ''
+        self.email = ""
         self.pluscode = ''
         self.estrellas = ''
         self.resenas = ''
